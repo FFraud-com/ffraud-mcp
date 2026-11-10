@@ -1,0 +1,41 @@
+{
+  "name": "ffraud-mcp",
+  "version": "1.1.1",
+  "description": "FFraud's MCP server and CLI under its first name: the same code as the ffraud package (npx ffraud). Website security, IP fraud scoring, disposable-email and domain checks. No key needed.",
+  "keywords": [
+    "mcp",
+    "model-context-protocol",
+    "fraud-detection",
+    "website-security",
+    "ip-reputation",
+    "disposable-email",
+    "ffraud"
+  ],
+  "homepage": "https://ffraud.com/docs/mcp",
+  "author": "FFraud <team@ffraud.com> (https://ffraud.com)",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/FFraud-com/ffraud-mcp.git",
+    "directory": "ffraud-mcp"
+  },
+  "bugs": {
+    "url": "https://ffraud.com/contact",
+    "email": "team@ffraud.com"
+  },
+  "license": "MIT",
+  "type": "module",
+  "bin": {
+    "ffraud-mcp": "index.mjs"
+  },
+  "main": "index.mjs",
+  "files": ["index.mjs", "README.md", "LICENSE"],
+  "dependencies": {
+    "ffraud": "^1.1.1"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

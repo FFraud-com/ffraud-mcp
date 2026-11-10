@@ -1,0 +1,51 @@
+{
+  "name": "ffraud",
+  "version": "1.1.1",
+  "description": "FFraud's open fraud database as a CLI and an MCP server: a whole website's security checked in seconds with every fix, IP fraud scoring with VPN/proxy/Tor detection, disposable-email checks, domain reputation and community abuse reports. No key needed.",
+  "keywords": [
+    "mcp",
+    "mcp-server",
+    "cli",
+    "ai-agents",
+    "website-security",
+    "security-headers",
+    "model-context-protocol",
+    "fraud-detection",
+    "ip-reputation",
+    "vpn-detection",
+    "proxy-detection",
+    "disposable-email",
+    "abuse",
+    "threat-intelligence",
+    "ffraud"
+  ],
+  "homepage": "https://ffraud.com/docs/mcp",
+  "author": "FFraud <team@ffraud.com> (https://ffraud.com)",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/FFraud-com/ffraud-mcp.git"
+  },
+  "bugs": {
+    "url": "https://ffraud.com/contact",
+    "email": "team@ffraud.com"
+  },
+  "license": "MIT",
+  "type": "module",
+  "bin": {
+    "ffraud": "index.mjs",
+    "ffraud-mcp": "index.mjs"
+  },
+  "main": "index.mjs",
+  "files": ["index.mjs", "README.md", "LICENSE"],
+  "engines": {
+    "node": ">=18"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "start": "node index.mjs",
+    "test": "node test.mjs",
+    "prepublishOnly": "node test.mjs"
+  }
+}
