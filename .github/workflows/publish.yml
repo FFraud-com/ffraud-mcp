@@ -1,0 +1,30 @@
+# Publishes ffraud and ffraud-mcp to npm when a release is published on GitHub. Trusted publishing: npm trusts this
+# workflow of FFraud-com/ffraud-mcp by OpenID Connect, so there is no token to keep or leak, and every version
+# carries a provenance statement (built here, from this commit). The live smoke test runs first (prepublishOnly).
+name: Publish to npm
+
+on:
+  release:
+    types: [published]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  id-token: write
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          registry-url: https://registry.npmjs.org
+      - name: npm that speaks trusted publishing
+        run: npm install -g npm@latest
+      - name: Publish ffraud
+        run: npm publish --access public
+      - name: Publish ffraud-mcp
+        working-directory: ffraud-mcp
+        run: npm publish --access public
