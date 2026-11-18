@@ -5,6 +5,7 @@ both names give the same five tools: a whole website's security, IP fraud scorin
 checks, and community abuse reports. No key needed.
 
 ```bash
+npx -y ffraud-mcp setup         # the exact steps for your AI app
 npx ffraud site example.com     # the CLI, under its current name
 npx -y ffraud-mcp               # MCP over stdio, under this name
 ```

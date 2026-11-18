@@ -1,6 +1,10 @@
 # Publishes ffraud and ffraud-mcp to npm when a release is published on GitHub. Trusted publishing: npm trusts this
 # workflow of FFraud-com/ffraud-mcp by OpenID Connect, so there is no token to keep or leak, and every version
 # carries a provenance statement (built here, from this commit). The live smoke test runs first (prepublishOnly).
+#
+# Hardened 2026-11-18: actions pinned to full commit hashes, and Node 24's own npm (checked to speak trusted
+# publishing) instead of installing npm@latest at publish time, which ran whatever npm released last.
+
 name: Publish to npm
 
 on:
@@ -8,23 +12,38 @@ on:
     types: [published]
   workflow_dispatch:
 
-permissions:
-  contents: read
-  id-token: write
+permissions: {}
+
+concurrency:
+  group: publish
+  cancel-in-progress: false
 
 jobs:
   publish:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
-          node-version: 22
-          registry-url: https://registry.npmjs.org
-      - name: npm that speaks trusted publishing
-        run: npm install -g npm@latest
+          persist-credentials: false
+
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: '24'
+
+      - name: Check that npm can use trusted publishing
+        run: |
+          npm_version="$(npm --version)"
+          if ! node -e "const [a,b,c]=process.argv[1].split('.').map(Number); process.exit(a>11||(a===11&&(b>5||(b===5&&c>=1)))?0:1)" "$npm_version"; then
+            echo "npm $npm_version is older than 11.5.1, the first release with trusted publishing."
+            exit 1
+          fi
+
       - name: Publish ffraud
-        run: npm publish --access public
+        run: npm publish --provenance --access public
+
       - name: Publish ffraud-mcp
         working-directory: ffraud-mcp
-        run: npm publish --access public
+        run: npm publish --provenance --access public

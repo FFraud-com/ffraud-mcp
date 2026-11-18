@@ -1,6 +1,6 @@
 {
   "name": "ffraud",
-  "version": "1.1.1",
+  "version": "1.2.0",
   "description": "FFraud's open fraud database as a CLI and an MCP server: a whole website's security checked in seconds with every fix, IP fraud scoring with VPN/proxy/Tor detection, disposable-email checks, domain reputation and community abuse reports. No key needed.",
   "keywords": [
     "mcp",
@@ -19,6 +19,7 @@
     "threat-intelligence",
     "ffraud"
   ],
+  "mcpName": "com.ffraud/mcp",
   "homepage": "https://ffraud.com/docs/mcp",
   "author": "FFraud <team@ffraud.com> (https://ffraud.com)",
   "repository": {

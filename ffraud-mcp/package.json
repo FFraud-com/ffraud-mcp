@@ -1,6 +1,6 @@
 {
   "name": "ffraud-mcp",
-  "version": "1.1.1",
+  "version": "1.2.0",
   "description": "FFraud's MCP server and CLI under its first name: the same code as the ffraud package (npx ffraud). Website security, IP fraud scoring, disposable-email and domain checks. No key needed.",
   "keywords": [
     "mcp",
@@ -30,7 +30,7 @@
   "main": "index.mjs",
   "files": ["index.mjs", "README.md", "LICENSE"],
   "dependencies": {
-    "ffraud": "^1.1.1"
+    "ffraud": "^1.2.0"
   },
   "engines": {
     "node": ">=18"

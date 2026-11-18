@@ -9,7 +9,15 @@
   <a href="https://ffraud.com">Website</a> · <a href="https://ffraud.com/docs">Docs</a> · <a href="https://ffraud.com/docs/mcp">MCP setup</a> · <a href="https://ffraud.com/openapi.json">OpenAPI</a>
 </p>
 
-FFraud's open fraud database as a **CLI** and an **MCP server**. Five tools, no key.
+FFraud's open fraud database as a **CLI** and an **MCP server**. Five checks with no key, and a key by one email when you want one.
+
+**The quickest way.** Ask your assistant to run this and follow what it prints, or run it yourself:
+
+```bash
+npx -y ffraud setup
+```
+
+It prints the exact steps for each app (Claude Code, Claude Desktop, ChatGPT, Cursor, VS Code, Windsurf, Gemini CLI, Codex). `npx -y ffraud setup cursor` prints one app, `--json` gives the same to a program, and `npx -y ffraud doctor` checks that everything works from your computer.
 
 ```bash
 npx ffraud site example.com      # a whole website's security, every finding with its fix
@@ -23,6 +31,8 @@ npx ffraud ip 185.220.101.34     # fraud score, VPN, proxy, Tor, network, abuse
 | `email_check` | Is this address disposable, a role account, or community-blacklisted? |
 | `domain_check` | Does this domain hand out throwaway mailboxes, or appear in the phishing dataset? |
 | `ip_reports` | What did the community actually report this IP for, and when? |
+| `request_api_key` | Get the person you work for an API key: FFraud emails them one Approve button, and nothing is created until they press it. |
+| `claim_api_key` | Pick up that key once they approved. It is handed over exactly once. |
 
 ## Use it as a CLI
 
@@ -33,13 +43,14 @@ npx ffraud ip 45.33.32.156
 npx ffraud email throwaway@mailinator.com
 npx ffraud domain mailinator.com
 npx ffraud reports 45.33.32.156
+npx ffraud signup you@example.com     # a key: one approval email, then the key, once
 ```
 
 Every command prints JSON, so it pipes into `jq` like anything else. `npm install -g ffraud` puts `ffraud` on your path.
 
 ## Use it as an MCP server
 
-The same five tools run on ffraud.com as a remote MCP server, with nothing to install: `https://ffraud.com/api/mcp`
+The same seven tools run on ffraud.com as a remote MCP server, with nothing to install: `https://ffraud.com/api/mcp`
 (Streamable HTTP). Claude Code: `claude mcp add --transport http ffraud https://ffraud.com/api/mcp`. Every client,
 step by step: https://ffraud.com/docs/mcp
 
@@ -62,9 +73,11 @@ It speaks JSON-RPC 2.0 over stdio. stdout is the protocol, so every log line goe
 
 ## Keys
 
-Nothing here needs one. Every tool calls a public endpoint.
+The checks need none: each calls a public endpoint.
 
-`FFRAUD_API_KEY` is forwarded as `X-API-Key` when set (the only header the engine reads a key from), which raises burst limits and site_check's hourly allowance, and nothing else. No tool in this package can spend money, change an account, or write to the database. `FFRAUD_BASE_URL` overrides the API base for local development.
+To get one without a browser, `npx ffraud signup you@example.com` (or the tools `request_api_key` and `claim_api_key`): FFraud emails that address one Approve button, the command waits for the click and prints the key once. A new address chooses its password on the approval page, so the account has a way into the dashboard. Without the click nothing is created.
+
+`FFRAUD_API_KEY` is forwarded as `X-API-Key` when set (the only header the engine reads a key from), which raises burst limits and site_check's hourly allowance, and nothing else. No tool in this package can spend money. Only the two key tools change anything: `request_api_key` sends the person one email, and a key exists only after their click. `FFRAUD_BASE_URL` overrides the API base for local development.
 
 ## Batch behavior worth knowing
 
