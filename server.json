@@ -1,0 +1,26 @@
+{
+  "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
+  "name": "com.ffraud/mcp",
+  "title": "FFraud",
+  "description": "Check a website's security and any IP, email or domain for fraud. Free, no key needed.",
+  "version": "1.3.0",
+  "websiteUrl": "https://ffraud.com/docs/mcp",
+  "repository": {
+    "url": "https://github.com/FFraud-com/ffraud-mcp",
+    "source": "github"
+  },
+  "remotes": [
+    {
+      "type": "streamable-http",
+      "url": "https://ffraud.com/api/mcp",
+      "headers": [
+        {
+          "name": "X-API-Key",
+          "description": "Optional. A free key from https://ffraud.com/dashboard/keys raises the hourly limits.",
+          "isRequired": false,
+          "isSecret": true
+        }
+      ]
+    }
+  ]
+}
